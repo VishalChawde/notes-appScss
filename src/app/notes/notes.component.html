@@ -1,0 +1,74 @@
+<div class="container-fluid mt-4">
+  <h3 class="mb-3">Notes</h3>
+
+  @if (errorMsg) {
+    <div class="alert alert-danger">{{ errorMsg }}</div>
+  }
+
+  <form class="mb-4" (ngSubmit)="addNote()">
+    <div class="row">
+      <div class="col-6 col-md-6 mb-2">
+        <input
+          class="form-control"
+          placeholder="Title"
+          [(ngModel)]="newNote.title"
+          name="title"
+          required
+        />
+      </div>
+      <div class="col-12 col-md-6 mb-2">
+        <textarea
+          class="form-control"
+          placeholder="Content"
+          [(ngModel)]="newNote.content"
+          name="content"
+          required
+        ></textarea>
+      </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Add Note</button>
+  </form>
+
+  <div class="row">
+    @for (note of notes; track note._id) {
+      <div class="col-12 col-md-6 mb-3">
+        <div class="card h-100">
+          <div class="card-body">
+            @if (editingNote && editingNote._id === note._id) {
+              <!-- Edit Mode -->
+              <input
+                class="form-control mb-2"
+                [(ngModel)]="editingNote.title"
+                name="editTitle{{ note._id }}"
+              />
+              <textarea
+                class="form-control mb-2"
+                [(ngModel)]="editingNote.content"
+                name="editContent{{ note._id }}"
+              ></textarea>
+              <button class="btn btn-success btn-sm me-2" (click)="updateNote()">Save</button>
+              <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Cancel</button>
+            } @else {
+              <!-- View Mode -->
+              <h5 class="card-title">{{ note.title }}</h5>
+              <p class="card-text">{{ note.content }}</p>
+              <p class="text-muted small">
+                Created on: {{ note.createdAt | date: 'dd-MM-yy, HH:mm' }}
+                <span *ngIf="note.updatedAt"> (Updated on: {{ note.updatedAt | date: 'dd-MM-yy, HH:mm' }})</span>
+              </p>
+              <button
+                class="btn btn-danger btn-sm me-2"
+                (click)="deleteNote(note._id!)"
+              >
+                Delete
+              </button>
+              <button class="btn btn-warning btn-sm" (click)="startEdit(note)">
+                Edit
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

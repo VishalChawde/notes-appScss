@@ -1,0 +1,38 @@
+
+Summary of What This note Test File Covers: notes.ts
+
+Test Case                     What it Verifies
+
+Component Creation         :- Component instantiates without errors
+ngOnInit() Works           :- Notes are fetched on init
+Error Handling on Fetch    :- Displays error message if fetch fails
+Add Note Success           :- Adds new note and resets form
+Add Note Validation        :- Does not call API if title/content is missing
+Delete Note                :- Deletes note and calls service method
+Delete Error               :- Displays error on failure
+Start/Cancel Edit          :- Sets and clears the editing state
+Update Note                :- Updates edited note successfully
+Update Note Error          :- Displays error on update failure
+
+
+
+Summary: What Each Part Does in noteservice spec file 
+
+Section             	What It Does
+beforeEach()	      :-  Sets up the test environment and injects services
+afterEach()           :-	Verifies no HTTP calls are left hanging
+it('should fetch all'):- Tests GET request for fetching notes
+it('should create')	  :- Tests POST request for creating a note
+it('should create multiple')	:- Tests bulk POST for multiple notes
+it('should delete')   :- Tests deletion of a note with POST and ID in URL
+it('should update')	  :- Tests updating a note with POST method and updated note content
+
+
+
+Summary: What Each Part Does app.ts
+
+Section	                What It Does
+beforeEach()	            :- Sets up the testing module with HTTP mocks
+it('should create the app')	:- Checks if the AppComponent instance is created successfully
+it('should have the title')	:- Verifies that the title property equals 'notes-app'
+it('should render title')	:- Ensures the rendered HTML includes the word 'Notes'
